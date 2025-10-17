@@ -6,7 +6,7 @@
 echo ("PHP is working! ");
 $studentNumber= 224058525;
 $name="Aishe";
-$Lname="Shihepo";
+$Lname="Shihepo ";
 $Fname= $name." ".$Lname;
 echo $Fname,$studentNumber;
 ?>
