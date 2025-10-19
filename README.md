@@ -1,9 +1,11 @@
 Campus Events - Event Booking System
 A comprehensive web application for managing and booking campus events at the Namibia University of Science and Technology (NUST). This system provides students with an intuitive platform to discover, browse, and reserve spots at various campus events.
 
+
 🚀 Features
 Core Functionality
 User Authentication - Secure login and registration system
+
 
 Event Discovery - Browse all upcoming campus events
 
@@ -26,6 +28,7 @@ Booking History - Track past and upcoming events
 
 Mobile-Friendly - Seamless experience across devices
 
+
 📁 Project Structure
 text
 campus-events/
@@ -39,6 +42,8 @@ campus-events/
 ├── contact.html            # Contact form and information
 ├── style.css               # Global stylesheet
 └── README.md               # Project documentation
+
+
 🎨 Design System
 Color Palette
 Primary Navy: #0a192f - Main background
@@ -51,10 +56,12 @@ Gold/Yellow: #ffd700 - Primary accent color
 
 White: #e6f1ff - Text and highlights
 
+
 Typography
 Font Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif
 
 Responsive scaling for optimal readability
+
 
 🛠️ Technologies Used
 HTML5 - Semantic markup structure
@@ -66,6 +73,8 @@ JavaScript - Client-side interactivity and form handling
 Local Storage - User data persistence
 
 Responsive Design - Mobile-first approach
+
+
 
 📱 Pages Overview
 1. Login & Registration (index.html)
@@ -131,6 +140,7 @@ Office hours and location
 
 Multiple contact methods
 
+
 🎯 Key Features
 User Management
 Registration with email and password
@@ -158,6 +168,7 @@ Multiple ticket selection
 Instant confirmation
 
 Cancellation functionality
+
 
 🌟 Event Categories
 Academic Events - Conferences, workshops, seminars
