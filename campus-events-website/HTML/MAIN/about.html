@@ -4,55 +4,267 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Campus Events</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --navy: #0a192f;
+            --navy-light: #112240;
+            --navy-lighter: #233554;
+            --white: #e6f1ff;
+            --yellow: #ffd700;
+            --yellow-dark: #ffb700;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--navy-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo h1 {
+            color: var(--yellow);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--yellow);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Content */
+        .about-content {
+            padding: 4rem 0;
+        }
+
+        .about-section {
+            background-color: var(--navy-light);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--navy-lighter);
+        }
+
+        .about-section:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--yellow);
+        }
+
+        .about-section h2 {
+            color: var(--yellow);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .about-section p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .about-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .about-section li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--navy-lighter);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .about-section li:last-child {
+            border-bottom: none;
+        }
+
+        .about-section li:before {
+            content: '✓';
+            color: var(--yellow);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy-light);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--navy-lighter);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <h1>Campus Events</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="booking.html">Book Event</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>Campus Events</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="booking.html">Book Event</a></li>
+                    <li><a href="about.html" class="active">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section class="about-header">
-            <h1>About Campus Events</h1>
+        <section class="page-header">
+            <div class="container">
+                <h1>About Campus Events</h1>
+                <p>Learn more about our mission and what we offer to the campus community</p>
+            </div>
         </section>
 
         <section class="about-content">
-            <div class="about-section">
-                <h2>Our Mission</h2>
-                <p>Campus Events is dedicated to providing students with access to a wide variety of engaging and educational events throughout the academic year. We believe in creating opportunities for learning, networking, and entertainment.</p>
-            </div>
+            <div class="container">
+                <div class="about-section">
+                    <h2>Our Mission</h2>
+                    <p>Campus Events is dedicated to providing students with access to a wide variety of engaging and educational events throughout the academic year. We believe in creating opportunities for learning, networking, and entertainment.</p>
+                </div>
 
-            <div class="about-section">
-                <h2>What We Offer</h2>
-                <ul>
-                    <li>Academic conferences and workshops</li>
-                    <li>Cultural and entertainment events</li>
-                    <li>Career development fairs</li>
-                    <li>Sports tournaments and activities</li>
-                    <li>Student club events</li>
-                </ul>
-            </div>
+                <div class="about-section">
+                    <h2>What We Offer</h2>
+                    <ul>
+                        <li>Academic conferences and workshops</li>
+                        <li>Cultural and entertainment events</li>
+                        <li>Career development fairs</li>
+                        <li>Sports tournaments and activities</li>
+                        <li>Student club events</li>
+                    </ul>
+                </div>
 
-            <div class="about-section">
-                <h2>Easy Booking Process</h2>
-                <p>Our online booking system makes it simple for students to reserve spots at events they're interested in. With just a few clicks, you can secure your place and receive immediate confirmation.</p>
+                <div class="about-section">
+                    <h2>Easy Booking Process</h2>
+                    <p>Our online booking system makes it simple for students to reserve spots at events they're interested in. With just a few clicks, you can secure your place and receive immediate confirmation.</p>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Campus Events. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 Campus Events. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Simple hover effect for about sections
+        document.querySelectorAll('.about-section').forEach(section => {
+            section.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            section.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>
