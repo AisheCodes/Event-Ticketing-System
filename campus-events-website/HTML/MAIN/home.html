@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Events - Home</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --navy-light: #112240;
+            --navy-lighter: #233554;
+            --white: #e6f1ff;
+            --yellow: #ffd700;
+            --yellow-dark: #ffb700;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--navy-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo h1 {
+            color: var(--yellow);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--yellow);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+            padding: 6rem 0;
+            text-align: center;
+            margin-top: 20px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        /* Buttons */
+        .cta-button, .book-btn {
+            display: inline-block;
+            background-color: var(--yellow);
+            color: var(--navy);
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover, .book-btn:hover {
+            background-color: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Featured Events */
+        .featured-events {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--yellow);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background-color: var(--navy-light);
+            border-radius: 8px;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--navy-lighter);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--yellow);
+        }
+
+        .event-card h3 {
+            color: var(--yellow);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .event-card p {
+            margin-bottom: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .book-btn {
+            margin-top: 1rem;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            background-color: var(--navy-light);
+            padding: 3rem 0;
+            margin: 2rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            color: var(--yellow);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy-light);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--navy-lighter);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 1rem;
+            }
+
+            .hero-content h2 {
+                font-size: 2.2rem;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>Campus Events</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="booking.html">Book Event</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Welcome to Campus Events</h2>
+                    <p>Discover and book amazing events happening on campus. From academic conferences to social gatherings, we've got something for everyone.</p>
+                    <a href="events.html" class="cta-button">Browse All Events</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats -->
+        <section class="quick-stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <h3>150+</h3>
+                        <p>Events This Semester</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>5,000+</h3>
+                        <p>Active Students</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Online Booking</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Events -->
+        <section class="featured-events">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured Events</h2>
+                    <p>Check out our most popular upcoming events</p>
+                </div>
+                
+                <div class="events-grid">
+                    <div class="event-card">
+                        <h3>Tech Conference 2024</h3>
+                        <p><strong>Date:</strong> March 15, 2024</p>
+                        <p><strong>Time:</strong> 9:00 AM - 5:00 PM</p>
+                        <p><strong>Location:</strong> Main Auditorium</p>
+                        <p>Annual technology conference featuring industry leaders and workshops on AI, Web Development, and Cybersecurity.Food and drinks available.</p>
+                        <a href="booking.html?event=tech-conference" class="book-btn">Book Now</a>
+                    </div>
+
+                    <div class="event-card">
+                        <h3>Spring Music Festival</h3>
+                        <p><strong>Date:</strong> April 20, 2024</p>
+                        <p><strong>Time:</strong> 2:00 PM - 10:00 PM</p>
+                        <p><strong>Location:</strong> Campus Green</p>
+                        <p>Outdoor music festival featuring student bands and local artists across multiple genres. Food trucks and beverages available.</p>
+                        <a href="booking.html?event=music-festival" class="book-btn">Book Now</a>
+                    </div>
+
+                    <div class="event-card">
+                        <h3>Career Fair 2024</h3>
+                        <p><strong>Date:</strong> May 10, 2024</p>
+                        <p><strong>Time:</strong> 10:00 AM - 4:00 PM</p>
+                        <p><strong>Location:</strong> Student Center</p>
+                        <p>Connect with top employers from technology, finance, healthcare, and engineering companies. Bring your resume!</p>
+                        <a href="booking.html?event=career-fair" class="book-btn">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="quick-stats">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Ready to Join?</h2>
+                    <p>Don't miss out on these amazing opportunities</p>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="booking.html" class="cta-button">Book Your First Event</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Campus Events. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8; font-size: 0.9rem;">
+                Creating memorable campus experiences since 2020
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple hover effect for event cards
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Simple animation for stats
+        const statItems = document.querySelectorAll('.stat-item h3');
+        statItems.forEach(stat => {
+            const finalNumber = parseInt(stat.textContent);
+            let currentNumber = 0;
+            const increment = finalNumber / 50;
+            const timer = setInterval(() => {
+                currentNumber += increment;
+                if (currentNumber >= finalNumber) {
+                    stat.textContent = finalNumber + (stat.textContent.includes('%') ? '%' : '+');
+                    clearInterval(timer);
+                } else {
+                    stat.textContent = Math.floor(currentNumber) + (stat.textContent.includes('%') ? '%' : '+');
+                }
+            }, 50);
+        });
+    </script>
+</body>
+</html>
