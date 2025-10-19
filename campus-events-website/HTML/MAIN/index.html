@@ -3,61 +3,937 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Events - Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Login - Campus Events</title>
+    <style>
+        :root {
+            --navy: #0a192f;
+            --navy-light: #112240;
+            --navy-lighter: #233554;
+            --white: #e6f1ff;
+            --yellow: #ffd700;
+            --yellow-dark: #ffb700;
+            --red: #ff6b6b;
+            --green: #51cf66;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        body {
+            background-color: var(--navy);
+            /* use the attached mtc image stored in the repository Images folder */
+            background-image: linear-gradient(rgba(7,19,42,0.75), rgba(7,19,42,0.75)), url('../../Images/mtc-https-gallery1.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--navy-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo h1 {
+            color: var(--yellow);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--yellow);
+        }
+
+        /* User Icon */
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--yellow);
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .user-icon:hover {
+            transform: scale(1.1);
+            border-color: var(--white);
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100vh;
+            background: var(--navy-light);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            z-index: 1000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .settings-panel.active {
+            right: 0;
+        }
+
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .settings-overlay.active {
+            display: block;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--navy-lighter);
+        }
+
+        .settings-header h2 {
+            color: var(--yellow);
+            font-size: 1.5rem;
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .close-settings:hover {
+            background: var(--navy-lighter);
+        }
+
+        .user-profile {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--yellow);
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+            border: 3px solid var(--white);
+        }
+
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-email {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h3 {
+            color: var(--yellow);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .settings-form {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--navy-lighter);
+            border-radius: 4px;
+            background: var(--navy);
+            color: var(--white);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+
+        .save-btn {
+            background-color: var(--yellow);
+            color: var(--navy);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .save-btn:hover {
+            background-color: var(--yellow-dark);
+        }
+
+        .logout-section {
+            border-top: 1px solid var(--navy-lighter);
+            padding-top: 1.5rem;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .logout-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+        }
+
+        .login-container {
+            background-color: var(--navy-light);
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--navy-lighter);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h2 {
+            color: var(--yellow);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            opacity: 0.9;
+        }
+
+        .password-requirements {
+            background: var(--navy-lighter);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .password-requirements h4 {
+            color: var(--yellow);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.3rem;
+            gap: 0.5rem;
+        }
+
+        .requirement.valid {
+            color: var(--green);
+        }
+
+        .requirement.invalid {
+            color: var(--red);
+        }
+
+        .requirement-icon {
+            font-size: 0.8rem;
+        }
+
+        .login-btn {
+            background-color: var(--yellow);
+            color: var(--navy);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .login-btn:disabled {
+            background-color: var(--navy-lighter);
+            color: var(--white);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            background-color: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .register-link a {
+            color: var(--yellow);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard Section */
+        .dashboard {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+            padding: 3rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--yellow);
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .action-card {
+            background-color: var(--navy-light);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--navy-lighter);
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--yellow);
+        }
+
+        .action-card h3 {
+            color: var(--yellow);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background-color: var(--yellow);
+            color: var(--navy);
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .action-btn:hover {
+            background-color: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy-light);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--navy-lighter);
+            margin-top: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 1rem;
+            }
+
+            .settings-panel {
+                width: 300px;
+            }
+
+            .login-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>Settings</h2>
+            <button class="close-settings" onclick="closeSettings()">×</button>
+        </div>
+
+        <div class="user-profile">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-name" id="profileName">User</div>
+            <div class="profile-email" id="profileEmail">user@example.com</div>
+        </div>
+
+        <div class="settings-section">
+            <h3>Profile Settings</h3>
+            <form class="settings-form" id="usernameForm">
+                <div class="form-group">
+                    <label for="username">Display Name</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your display name">
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+
+        <div class="settings-section logout-section">
+            <h3>Account</h3>
+            <button class="logout-btn" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <h1>Campus Events</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="events.html">Events</a></li>
-                <li><a href="booking.html">Book Event</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>Campus Events</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="booking.html">Book Event</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li id="userNavItem" style="display: none;">
+                        <div class="user-icon" id="userIcon" onclick="openSettings()">U</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h2>Welcome to Campus Events</h2>
-                <p>Discover and book amazing events happening on campus</p>
-                <a href="events.html" class="cta-button">Browse Events</a>
+    <!-- Login Section -->
+    <section class="login-section" id="loginSection">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Welcome!</h2>
+                <p>Sign in to your Campus Events account</p>
             </div>
-        </section>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <div class="register-link">
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Sign up here</a></p>
+            </div>
+        </div>
+    </section>
 
-        <section class="featured-events">
-            <h2>Upcoming Events</h2>
-            <div class="events-grid">
-                <div class="event-card">
-                    <h3>Tech Conference 2024</h3>
-                    <p>Date: March 15, 2024</p>
-                    <p>Location: Main Auditorium</p>
-                    <a href="booking.html?event=tech-conference" class="book-btn">Book Now</a>
+    <!-- Register Section -->
+    <section class="login-section" id="registerSection" style="display: none;">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>Create Account</h2>
+                <p>Join Campus Events today</p>
+            </div>
+            
+            <div class="password-requirements">
+                <h4>Password Requirements:</h4>
+                <div class="requirement invalid" id="reqLength">
+                    <span class="requirement-icon">⭕</span>
+                    <span>At least 7 characters long</span>
                 </div>
-                <div class="event-card">
-                    <h3>Music Festival</h3>
-                    <p>Date: April 20, 2024</p>
-                    <p>Location: Campus Green</p>
-                    <a href="booking.html?event=music-festival" class="book-btn">Book Now</a>
-                </div>
-                <div class="event-card">
-                    <h3>Career Fair</h3>
-                    <p>Date: May 10, 2024</p>
-                    <p>Location: Student Center</p>
-                    <a href="booking.html?event=career-fair" class="book-btn">Book Now</a>
+                <div class="requirement invalid" id="reqNumber">
+                    <span class="requirement-icon">⭕</span>
+                    <span>Contains at least one number (0-9)</span>
                 </div>
             </div>
-        </section>
-    </main>
+
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" name="name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" name="password" required placeholder="Create a password" oninput="validatePassword()">
+                </div>
+                <div class="form-group">
+                    <label for="regConfirmPassword">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" name="confirmPassword" required placeholder="Confirm your password" oninput="validatePassword()">
+                </div>
+                <button type="submit" class="login-btn" id="registerBtn" disabled>Create Account</button>
+            </form>
+            <div class="register-link">
+                <p>Already have an account? <a href="#" onclick="showLogin()">Sign in here</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard container" id="dashboardSection">
+        <div class="welcome-section">
+            <h2>Welcome, <span id="welcomeName">User</span>!</h2>
+            <p>Ready to explore amazing campus events?</p>
+        </div>
+
+        <div class="quick-actions">
+            <div class="action-card">
+                <h3>Browse Events</h3>
+                <p>Discover upcoming events and activities on campus</p>
+                <a href="events.html" class="action-btn">View Events</a>
+            </div>
+            <div class="action-card">
+                <h3>Book Events</h3>
+                <p>Reserve your spot at your favorite events</p>
+                <a href="booking.html" class="action-btn">Book Now</a>
+            </div>
+            <div class="action-card">
+                <h3>My Bookings</h3>
+                <p>View and manage your event reservations</p>
+                <a href="#" class="action-btn">View Bookings</a>
+            </div>
+        </div>
+
+        <div class="featured-events">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: var(--yellow);">Featured Events</h2>
+            <div class="quick-actions">
+                <div class="action-card">
+                    <h3>Tech Conference 2024</h3>
+                    <p>March 15, 2024 • Main Auditorium</p>
+                    <a href="booking.html?event=tech-conference" class="action-btn">Book Now</a>
+                </div>
+                <div class="action-card">
+                    <h3>Spring Music Festival</h3>
+                    <p>April 20, 2024 • Campus Green</p>
+                    <a href="booking.html?event=music-festival" class="action-btn">Book Now</a>
+                </div>
+                <div class="action-card">
+                    <h3>Career Fair 2024</h3>
+                    <p>May 10, 2024 • Student Center</p>
+                    <a href="booking.html?event=career-fair" class="action-btn">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2024 Campus Events. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 Campus Events. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Password validation function
+        function validatePassword() {
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const registerBtn = document.getElementById('registerBtn');
+            
+            // Check password length
+            const isLengthValid = password.length >= 7;
+            const lengthReq = document.getElementById('reqLength');
+            
+            // Check for at least one number
+            const hasNumber = /\d/.test(password);
+            const numberReq = document.getElementById('reqNumber');
+            
+            // Update requirement indicators
+            if (isLengthValid) {
+                lengthReq.classList.remove('invalid');
+                lengthReq.classList.add('valid');
+                lengthReq.querySelector('.requirement-icon').textContent = '✅';
+            } else {
+                lengthReq.classList.remove('valid');
+                lengthReq.classList.add('invalid');
+                lengthReq.querySelector('.requirement-icon').textContent = '⭕';
+            }
+            
+            if (hasNumber) {
+                numberReq.classList.remove('invalid');
+                numberReq.classList.add('valid');
+                numberReq.querySelector('.requirement-icon').textContent = '✅';
+            } else {
+                numberReq.classList.remove('valid');
+                numberReq.classList.add('invalid');
+                numberReq.querySelector('.requirement-icon').textContent = '⭕';
+            }
+            
+            // Check if passwords match
+            const passwordsMatch = password === confirmPassword;
+            
+            // Enable/disable register button based on validation
+            const isValid = isLengthValid && hasNumber && passwordsMatch && password.length > 0 && confirmPassword.length > 0;
+            registerBtn.disabled = !isValid;
+            
+            return isValid;
+        }
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                showDashboard(JSON.parse(currentUser));
+            }
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email && password) {
+                const user = {
+                    name: email.split('@')[0],
+                    email: email,
+                    avatar: email.charAt(0).toUpperCase(),
+                    username: email.split('@')[0]
+                };
+                
+                // Check if user has saved username
+                const savedUser = localStorage.getItem('user_' + email);
+                if (savedUser) {
+                    const userData = JSON.parse(savedUser);
+                    user.name = userData.username || user.name;
+                    user.avatar = userData.avatar || user.avatar;
+                }
+                
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showDashboard(user);
+                this.reset();
+            } else {
+                alert('Please enter both email and password');
+            }
+        });
+
+        // Register form handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            
+            // Validate password requirements
+            if (!validatePassword()) {
+                alert('Please ensure your password meets all requirements');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            if (name && email && password) {
+                const user = {
+                    name: name,
+                    email: email,
+                    avatar: name.charAt(0).toUpperCase(),
+                    username: name
+                };
+                
+                // Save user data
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('user_' + email, JSON.stringify(user));
+                
+                showDashboard(user);
+                this.reset();
+            } else {
+                alert('Please fill in all fields');
+            }
+        });
+
+        // Username form handler
+        document.getElementById('usernameForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (username && currentUser) {
+                // Update current user
+                currentUser.name = username;
+                currentUser.username = username;
+                currentUser.avatar = username.charAt(0).toUpperCase();
+                
+                // Save updates
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('user_' + currentUser.email, JSON.stringify(currentUser));
+                
+                // Update UI
+                updateUserDisplay(currentUser);
+                this.reset();
+                
+                alert('Username updated successfully!');
+            }
+        });
+
+        // Show dashboard function
+        function showDashboard(user) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('registerSection').style.display = 'none';
+            document.getElementById('dashboardSection').style.display = 'block';
+            document.getElementById('userNavItem').style.display = 'block';
+            
+            updateUserDisplay(user);
+        }
+
+        // Update user display across the app
+        function updateUserDisplay(user) {
+            const displayName = user.username || user.name;
+            
+            // Update dashboard
+            document.getElementById('welcomeName').textContent = displayName;
+            
+            // Update navigation
+            document.getElementById('userIcon').textContent = user.avatar;
+            
+            // Update settings panel
+            document.getElementById('profileName').textContent = displayName;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profileAvatar').textContent = user.avatar;
+            document.getElementById('username').value = user.username || '';
+        }
+
+        // Settings panel functions
+        function openSettings() {
+            document.getElementById('settingsPanel').classList.add('active');
+            document.getElementById('settingsOverlay').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsPanel').classList.remove('active');
+            document.getElementById('settingsOverlay').classList.remove('active');
+        }
+
+        // Close settings when clicking overlay
+        document.getElementById('settingsOverlay').addEventListener('click', closeSettings);
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('currentUser');
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('userNavItem').style.display = 'none';
+            document.getElementById('loginForm').reset();
+            closeSettings();
+        }
+
+        // Show register form
+        function showRegister() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('registerSection').style.display = 'flex';
+        }
+
+        // Show login form
+        function showLogin() {
+            document.getElementById('registerSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'flex';
+        }
+
+        // Add hover effects to action cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.action-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
