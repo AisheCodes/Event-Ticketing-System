@@ -4,65 +4,319 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events - Campus Events</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --navy: #0a192f;
+            --navy-light: #112240;
+            --navy-lighter: #233554;
+            --white: #e6f1ff;
+            --yellow: #ffd700;
+            --yellow-dark: #ffb700;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--navy-light);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo h1 {
+            color: var(--yellow);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active {
+            color: var(--yellow);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--yellow);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--navy-light) 0%, var(--navy) 100%);
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Events List */
+        .events-list {
+            padding: 4rem 0;
+        }
+
+        .event-item {
+            background-color: var(--navy-light);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--navy-lighter);
+        }
+
+        .event-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border-color: var(--yellow);
+        }
+
+        .event-item h3 {
+            color: var(--yellow);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-description {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .book-btn {
+            display: inline-block;
+            background-color: var(--yellow);
+            color: var(--navy);
+            padding: 10px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .book-btn:hover {
+            background-color: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy-light);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--navy-lighter);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 1rem 0;
+            }
+
+            .nav-links {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 0.5rem 1rem;
+            }
+
+            .event-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <div class="logo">
-                <h1>Campus Events</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="events.html" class="active">Events</a></li>
-                <li><a href="booking.html">Book Event</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <h1>Campus Events</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="events.html" class="active">Events</a></li>
+                    <li><a href="booking.html">Book Event</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section class="events-header">
-            <h1>All Campus Events</h1>
-            <p>Find and book your favorite events</p>
+        <section class="page-header">
+            <div class="container">
+                <h1>All Campus Events</h1>
+                <p>Discover and book amazing events happening across campus</p>
+            </div>
         </section>
 
         <section class="events-list">
-            <div class="event-item">
-                <div class="event-info">
+            <div class="container">
+                <div class="event-item">
                     <h3>Tech Conference 2024</h3>
-                    <p><strong>Date:</strong> March 15, 2024 | 9:00 AM - 5:00 PM</p>
-                    <p><strong>Location:</strong> Main Auditorium</p>
-                    <p><strong>Description:</strong> Annual technology conference featuring industry leaders and workshops.</p>
-                    <a href="booking.html?event=tech-conference" class="book-btn">Book This Event</a>
+                    <div class="event-details">
+                        <div class="event-detail">
+                            <span>📅 March 15, 2024 | 9:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="event-detail">
+                            <span>📍 Main Auditorium</span>
+                        </div>
+                        <div class="event-detail">
+                            <span>💰 Free for Students</span>
+                        </div>
+                    </div>
+                    <p class="event-description">
+                        Annual technology conference featuring industry leaders and workshops on AI, Web Development, 
+                        Cybersecurity, and emerging technologies.
+                    </p>
+                    <a href="booking.html?event=tech-conference" class="book-btn">Book Now</a>
                 </div>
-            </div>
 
-            <div class="event-item">
-                <div class="event-info">
+                <div class="event-item">
                     <h3>Spring Music Festival</h3>
-                    <p><strong>Date:</strong> April 20, 2024 | 2:00 PM - 10:00 PM</p>
-                    <p><strong>Location:</strong> Campus Green</p>
-                    <p><strong>Description:</strong> Outdoor music festival featuring student bands and local artists.</p>
-                    <a href="booking.html?event=music-festival" class="book-btn">Book This Event</a>
+                    <div class="event-details">
+                        <div class="event-detail">
+                            <span>📅 April 20, 2024 | 2:00 PM - 10:00 PM</span>
+                        </div>
+                        <div class="event-detail">
+                            <span>📍 Campus Green</span>
+                        </div>
+                        <div class="event-detail">
+                            <span>💰 $15 Students | $25 General</span>
+                        </div>
+                    </div>
+                    <p class="event-description">
+                        Outdoor music festival featuring student bands, local artists, and food trucks. 
+                        Enjoy live performances across multiple genres.
+                    </p>
+                    <a href="booking.html?event=music-festival" class="book-btn">Book Now</a>
                 </div>
-            </div>
 
-            <div class="event-item">
-                <div class="event-info">
+                <div class="event-item">
                     <h3>Career Fair 2024</h3>
-                    <p><strong>Date:</strong> May 10, 2024 | 10:00 AM - 4:00 PM</p>
-                    <p><strong>Location:</strong> Student Center</p>
-                    <p><strong>Description:</strong> Connect with top employers and explore career opportunities.</p>
-                    <a href="booking.html?event=career-fair" class="book-btn">Book This Event</a>
+                    <div class="event-details">
+                        <div class="event-detail">
+                            <span>📅 May 10, 2024 | 10:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="event-detail">
+                            <span>📍 Student Center</span>
+                        </div>
+                        <div class="event-detail">
+                            <span>💰 Free Admission</span>
+                        </div>
+                    </div>
+                    <p class="event-description">
+                        Connect with top employers from various industries. Bring your resume and meet recruiters 
+                        from technology, finance, healthcare, and engineering companies.
+                    </p>
+                    <a href="booking.html?event=career-fair" class="book-btn">Book Now</a>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Campus Events. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2024 Campus Events. All rights reserved.</p>
+        </div>
     </footer>
+
+    <script>
+        // Simple hover effect for event items
+        document.querySelectorAll('.event-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
 </body>
 </html>
