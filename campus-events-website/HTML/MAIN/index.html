@@ -101,6 +101,46 @@
             background-color: var(--yellow);
         }
 
+        /* Navigation Controls */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--navy-lighter);
+            color: var(--white);
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: var(--navy-lighter);
+            border-color: var(--yellow);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: 1px solid var(--navy-lighter);
+            color: var(--white);
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            background: var(--navy-lighter);
+            border-color: var(--yellow);
+        }
+
         /* User Icon */
         .user-icon {
             width: 40px;
@@ -539,18 +579,36 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
+                flex-direction: row;
+                justify-content: space-between;
                 padding: 1rem 0;
             }
 
             .nav-links {
-                margin-top: 1.5rem;
-                flex-wrap: wrap;
-                justify-content: center;
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--navy-light);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 2rem 0;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
             }
 
             .nav-links li {
-                margin: 0.5rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
             }
 
             .settings-panel {
@@ -618,7 +676,7 @@
         </div>
     </div>
 
-    <header>
+    <header class="header">
         <div class="container">
             <nav class="navbar">
                 <div class="logo">
@@ -634,6 +692,10 @@
                         <div class="user-icon" id="userIcon" onclick="openSettings()">U</div>
                     </li>
                 </ul>
+                <div class="nav-controls">
+                    <button id="themeToggle" class="theme-toggle">🌙</button>
+                    <button class="mobile-menu-btn">☰</button>
+                </div>
             </nav>
         </div>
     </header>
@@ -743,298 +805,10 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Campus Events. All rights reserved.</p>
+            <p>&copy; <span id="currentYear">2025</span> Campus Events. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        // Check if user is already logged in
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                showDashboard(JSON.parse(currentUser));
-                loadUserBookings();
-            }
-            
-            // Initialize with some sample bookings if none exist
-            const currentUserData = JSON.parse(localStorage.getItem('currentUser'));
-            if (currentUserData) {
-                const userBookings = JSON.parse(localStorage.getItem('my_bookings_' + currentUserData.email) || '[]');
-                if (userBookings.length === 0) {
-                    // Add sample bookings for demo purposes
-                    const sampleBookings = [
-                        {
-                            id: 'b1',
-                            eventName: 'Hackathon 2025',
-                            date: 'October 23, 2025',
-                            time: '9:00 AM - 5:00 PM',
-                            location: 'HTTPS Building',
-                            status: 'pending'
-                        },
-                        {
-                            id: 'b2',
-                            eventName: 'Graduation Ceremony',
-                            date: 'October 10, 2025',
-                            time: '07:30 AM - 5:00 PM',
-                            location: 'Mercure Hotel',
-                            status: 'Completed'
-                        }
-                    ];
-                    
-                    localStorage.setItem('my_bookings_' + currentUserData.email, JSON.stringify(sampleBookings));
-                }
-            }
-        });
-
-        // Login form handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if (email && password) {
-                const user = {
-                    name: email.split('@')[0], // Default to email username
-                    email: email,
-                    avatar: email.charAt(0).toUpperCase(),
-                    username: email.split('@')[0] // Initialize username
-                };
-                
-                // Check if user has saved username
-                const savedUser = localStorage.getItem('user_' + email);
-                if (savedUser) {
-                    const userData = JSON.parse(savedUser);
-                    user.name = userData.username || user.name;
-                    user.avatar = userData.avatar || user.avatar;
-                }
-                
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                showDashboard(user);
-                loadUserBookings();
-                this.reset();
-            } else {
-                alert('Please enter both email and password');
-            }
-        });
-
-        // Register form handler
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const confirmPassword = document.getElementById('regConfirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                alert('Passwords do not match');
-                return;
-            }
-            
-            if (name && email && password) {
-                const user = {
-                    name: name,
-                    email: email,
-                    avatar: name.charAt(0).toUpperCase(),
-                    username: name // Set initial username to full name
-                };
-                
-                // Save user data
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('user_' + email, JSON.stringify(user));
-                
-                showDashboard(user);
-                loadUserBookings();
-                this.reset();
-            } else {
-                alert('Please fill in all fields');
-            }
-        });
-
-        // Username form handler
-        document.getElementById('usernameForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            if (username && currentUser) {
-                // Update current user
-                currentUser.name = username;
-                currentUser.username = username;
-                currentUser.avatar = username.charAt(0).toUpperCase();
-                
-                // Save updates
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                localStorage.setItem('user_' + currentUser.email, JSON.stringify(currentUser));
-                
-                // Update UI
-                updateUserDisplay(currentUser);
-                this.reset();
-                
-                alert('Username updated successfully!');
-            }
-        });
-
-        // Show dashboard function
-        function showDashboard(user) {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('registerSection').style.display = 'none';
-            document.getElementById('dashboardSection').style.display = 'block';
-            document.getElementById('userNavItem').style.display = 'block';
-            
-            updateUserDisplay(user);
-        }
-
-        // Update user display across the app
-        function updateUserDisplay(user) {
-            const displayName = user.username || user.name;
-            
-            // Update dashboard
-            document.getElementById('welcomeName').textContent = displayName;
-            
-            // Update navigation
-            document.getElementById('userIcon').textContent = user.avatar;
-            
-            // Update settings panel
-            document.getElementById('profileName').textContent = displayName;
-            document.getElementById('profileEmail').textContent = user.email;
-            document.getElementById('profileAvatar').textContent = user.avatar;
-            document.getElementById('username').value = user.username || '';
-        }
-
-        // Load user bookings
-        function loadUserBookings() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            if (!currentUser) return;
-            
-            const userBookings = JSON.parse(localStorage.getItem('my_bookings_' + currentUser.email) || '[]');
-            const bookingsList = document.getElementById('bookingsList');
-            
-            // Clear existing bookings
-            bookingsList.innerHTML = '';
-            
-            if (userBookings.length === 0) {
-                bookingsList.innerHTML = '<div class="no-bookings">No bookings yet. <a href="booking.html" style="color: var(--yellow);">Book your first event!</a></div>';
-                return;
-            }
-            
-            // Show only the 3 most recent bookings in the settings panel
-            const recentBookings = userBookings.slice(0, 3);
-            
-            recentBookings.forEach(booking => {
-                const bookingItem = document.createElement('div');
-                bookingItem.className = 'booking-item';
-                
-                bookingItem.innerHTML = `
-                    <div class="booking-header">
-                        <div class="booking-title">${booking.eventName}</div>
-                        <div class="booking-status ${booking.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}">${booking.status}</div>
-                    </div>
-                    <div class="booking-details">
-                        <div>Date: ${booking.date}</div>
-                        <div>Time: ${booking.time}</div>
-                        <div>Location: ${booking.location}</div>
-                    </div>
-                    <div class="booking-actions">
-                        <button class="booking-btn btn-primary" onclick="viewBookingDetails('${booking.id}')">Details</button>
-                        <button class="booking-btn btn-secondary" onclick="cancelBooking('${booking.id}')">Cancel</button>
-                    </div>
-                `;
-                
-                bookingsList.appendChild(bookingItem);
-            });
-        }
-
-        // View all bookings
-        function viewAllBookings() {
-            alert('This would open a page with all your bookings. In a real application, this would navigate to a dedicated bookings page.');
-            // In a real app: window.location.href = 'bookings.html';
-        }
-
-        // View booking details
-        function viewBookingDetails(bookingId) {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            const userBookings = JSON.parse(localStorage.getItem('my_bookings_' + currentUser.email) || '[]');
-            const booking = userBookings.find(b => b.id === bookingId);
-            
-            if (booking) {
-                alert(`Booking Details:\n\nEvent: ${booking.eventName}\nDate: ${booking.date}\nTime: ${booking.time}\nLocation: ${booking.location}\nStatus: ${booking.status}\nBooking ID: ${booking.id}`);
-            }
-        }
-
-        // Cancel booking
-        function cancelBooking(bookingId) {
-            if (confirm('Are you sure you want to cancel this booking?')) {
-                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                let userBookings = JSON.parse(localStorage.getItem('my_bookings_' + currentUser.email) || '[]');
-                
-                // Remove the booking
-                userBookings = userBookings.filter(booking => booking.id !== bookingId);
-                
-                // Save updated bookings
-                localStorage.setItem('my_bookings_' + currentUser.email, JSON.stringify(userBookings));
-                
-                // Reload bookings display
-                loadUserBookings();
-                
-                alert('Booking cancelled successfully!');
-            }
-        }
-
-        // Settings panel functions
-        function openSettings() {
-            document.getElementById('settingsPanel').classList.add('active');
-            document.getElementById('settingsOverlay').classList.add('active');
-            
-            // Load bookings when settings panel opens
-            loadUserBookings();
-        }
-
-        function closeSettings() {
-            document.getElementById('settingsPanel').classList.remove('active');
-            document.getElementById('settingsOverlay').classList.remove('active');
-        }
-
-        // Close settings when clicking overlay
-        document.getElementById('settingsOverlay').addEventListener('click', closeSettings);
-
-        // Logout function
-        function logout() {
-            localStorage.removeItem('currentUser');
-            document.getElementById('dashboardSection').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'flex';
-            document.getElementById('userNavItem').style.display = 'none';
-            document.getElementById('loginForm').reset();
-            closeSettings();
-        }
-
-        // Show register form
-        function showRegister() {
-            document.getElementById('loginSection').style.display = 'none';
-            document.getElementById('registerSection').style.display = 'flex';
-        }
-
-        // Show login form
-        function showLogin() {
-            document.getElementById('registerSection').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'flex';
-        }
-
-        // Add hover effects to action cards
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.action-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-        });
-    </script>
+    <script src="../../JS/script.js"></script>
 </body>
 </html>
