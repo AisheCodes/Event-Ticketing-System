@@ -139,6 +139,122 @@
             box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
         }
 
+        /* User Icon */
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--yellow);
+            color: var(--navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .user-icon:hover {
+            transform: scale(1.1);
+            border-color: var(--white);
+        }
+
+        /* Sign In Section */
+        .signin-section {
+            padding: 4rem 0;
+        }
+
+        .signin-container {
+            background-color: var(--navy-light);
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--navy-lighter);
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .signin-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .signin-header h2 {
+            color: var(--yellow);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .signin-header p {
+            opacity: 0.9;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--navy-lighter);
+            border-radius: 4px;
+            background: var(--navy);
+            color: var(--white);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+
+        .login-btn {
+            background-color: var(--yellow);
+            color: var(--navy);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .login-btn:hover {
+            background-color: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .register-link a {
+            color: var(--yellow);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
         /* Featured Events */
         .featured-events {
             padding: 5rem 0;
@@ -293,6 +409,9 @@
                     <li><a href="booking.html">Book Event</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li id="userNavItem" style="display: none;">
+                        <div class="user-icon" id="userIcon" onclick="openSettings()">U</div>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -306,6 +425,66 @@
                     <h2>Welcome to Campus Events</h2>
                     <p>Discover and book amazing events happening on campus. From academic conferences to social gatherings, we've got something for everyone.</p>
                     <a href="events.html" class="cta-button">Browse All Events</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sign In/Sign Up Section -->
+        <section class="signin-section" id="signinSection">
+            <div class="container">
+                <div class="signin-container">
+                    <div class="signin-header">
+                        <h2>Sign In to Your Account</h2>
+                        <p>Access your bookings and manage your profile</p>
+                    </div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="login-btn">Sign In</button>
+                    </form>
+                    <div class="register-link">
+                        <p>Don't have an account? <a href="#" onclick="showRegister()">Sign up here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section class="signin-section" id="registerSection" style="display: none;">
+            <div class="container">
+                <div class="signin-container">
+                    <div class="signin-header">
+                        <h2>Create Account</h2>
+                        <p>Join Campus Events today</p>
+                    </div>
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label for="regName">Full Name</label>
+                            <input type="text" id="regName" name="name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="regEmail">Email Address</label>
+                            <input type="email" id="regEmail" name="email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="regPassword">Password</label>
+                            <input type="password" id="regPassword" name="password" required placeholder="Create a password">
+                        </div>
+                        <div class="form-group">
+                            <label for="regConfirmPassword">Confirm Password</label>
+                            <input type="password" id="regConfirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                        </div>
+                        <button type="submit" class="login-btn">Create Account</button>
+                    </form>
+                    <div class="register-link">
+                        <p>Already have an account? <a href="#" onclick="showLogin()">Sign in here</a></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -354,7 +533,7 @@
 
                     <div class="event-card">
                         <h3>Graduation Ceremony</h3>
-                        <p><strong>Date:</strong>October 10, 2024</p>
+                        <p><strong>Date:</strong>October 10, 2025</p>
                         <p><strong>Time:</strong> 07:30 AM - 5:00 PM</p>
                         <p><strong>Location:</strong> Mercure Hotel</p>
                         <p>Graduation ceremony for the class of 2025. Celebrate your achievements with fellow graduates, family, 
@@ -397,34 +576,6 @@
         </div>
     </footer>
 
-    <script>
-        // Simple hover effect for event cards
-        document.querySelectorAll('.event-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Simple animation for stats
-        const statItems = document.querySelectorAll('.stat-item h3');
-        statItems.forEach(stat => {
-            const finalNumber = parseInt(stat.textContent);
-            let currentNumber = 0;
-            const increment = finalNumber / 50;
-            const timer = setInterval(() => {
-                currentNumber += increment;
-                if (currentNumber >= finalNumber) {
-                    stat.textContent = finalNumber + (stat.textContent.includes('%') ? '%' : '+');
-                    clearInterval(timer);
-                } else {
-                    stat.textContent = Math.floor(currentNumber) + (stat.textContent.includes('%') ? '%' : '+');
-                }
-            }, 50);
-        });
-    </script>
+    <script src="../../JS/script.js"></script>
 </body>
 </html>
